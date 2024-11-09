@@ -1,0 +1,49 @@
+{% extends "_base.html" %}
+
+{% block center_content %}
+    {% if pizza %}
+        <form action="{{ url_for('pizzas.edit_pizza', id=pizza.id) }}" method="pizza">
+    {% else %}
+        <form action="{{ url_for('pizzas.add_pizza') }}" method="pizza">
+    {% endif %}
+
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Назва піцци</label>
+
+        {% if pizza %}
+            <input type="text" class="form-control" id="exampleInputEmail1" name="title" value="{{ request.form.title or pizza.title }}">
+        {% else %}
+            <input type="text" class="form-control" id="exampleInputEmail1" name="title" value="{{ request.form.title }}">
+        {% endif %}
+
+    </div>
+        <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Піцца</label>
+
+        {% if pizza %}
+            <textarea type="text" class="form-control" id="exampleInputEmail1" name="text">{{ request.form.text or pizza.text }}</textarea>
+        {% else %}
+            <textarea type="text" class="form-control" id="exampleInputEmail1" name="text">{{ request.form.text }}</textarea>
+        {% endif %}
+
+    </div>
+    {% if not pizza %}
+        <select name="pizza_id" class="form-control">
+            {% for pizza in pizzas %}
+                <option value="{{ price.id }}">{{ pizza.price }}</option>
+            {% endfor %}
+        </select>
+    {% endif %}
+    <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Пароль адміністратора</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+    </div>
+    <button type="submit" class="btn btn-primary">Додати піццу</button>
+    </form>
+
+    {% with messages = get_flashed_messages() %}
+        {% for msg in messages %}
+            <h5 class="btn btn-info">{{ msg }}</h5>
+        {% endfor %}
+    {% endwith %}
+{% endblock center_content %}
