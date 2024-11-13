@@ -3,7 +3,7 @@ from app.db.__init import Session,Pizza
 from app.data.password import ADMIN_PASS
 
 
-pizza_route = Blueprint("pizza", __name__)
+pizza_route = Blueprint("pizzas", __name__)
 
 
 # @pizza_route.get("/")
@@ -48,5 +48,5 @@ def add_pizza():
             else:
                 flash("Нeвийшло додати піцу")
 
-        pizza = session.query(Pizza).all()
+        pizza = session.query(Pizza)
         return render_template("add_pizza.html", pizza=pizza)
